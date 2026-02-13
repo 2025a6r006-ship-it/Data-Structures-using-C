@@ -1,0 +1,29 @@
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+
+int main() {
+    int N;
+    scanf("%d",&N);
+    int list[100];
+    for(int i=0;i<N;i++){
+        scanf("%d",&list[i]);
+    }
+    int K;
+    scanf("%d",&K);
+    for(int i=0;i<K;i++){
+        int X,P;
+        scanf("%d%d",&X,&P);
+        for(int j=n-1;j>=P;j--){
+            list[j+1]=list[j];
+        }
+        list[P]=X;
+        N++;
+    }
+    for(int i=0;i<N;i++){
+        printf("%d ",list[i]);
+    }
+    
+    return 0;
+}
