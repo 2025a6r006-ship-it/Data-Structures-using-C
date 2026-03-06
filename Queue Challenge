@@ -1,0 +1,93 @@
+#include<stdio.h>
+#include<stdlib.h>
+#define MAX 100
+int queue[MAX],front=-1,rear=-1;
+
+int isFull(){
+    return rear==MAX-1; 
+}
+
+int isEmpty(){
+    return front==-1;
+}
+
+void enqueue(int data){
+    if(isFull()){
+        printf("Overflow\n");
+        return;
+    }
+    queue[++rear] = data;
+    printf("\n%d inserted in queue\n",data);
+    if(front==-1){
+        front = rear;
+    }
+}
+
+int dequeue(){
+    if(isEmpty()){
+        printf("Queue Underflow\n");
+        return -1;
+    }
+    int val = queue[front++];
+    if(front > rear){
+        front = rear = -1;
+    }
+    return val;
+}
+
+int peek(){
+    if(isEmpty()){
+        printf("Queue Underflow\n");
+        return -1;
+    }
+    return queue[front];
+}
+
+void display(){
+    for(int i=front;i<=rear;i++){
+        printf("%d ",queue[i]);
+    }
+}
+
+int main(){
+    int choice,val;
+    while(1){
+        printf("\n1. Enqueue\n");
+        printf("2. Dequeue\n");
+        printf("3. Peek\n");
+        printf("4. Display\n");
+        printf("5. Exit\n");
+        printf("Enter Choice: ");
+        scanf("%d",&choice);
+    
+            switch(choice){
+            case 1:
+                printf("Enter value: ");
+                scanf("%d",&val);
+                enqueue(val);
+                break;
+            case 2:
+                dequeue();
+                printf("Element Dequeued\n");
+                break;
+            case 3:
+                val = peek();
+                printf("%d is at the front\n",val);
+                break;
+            case 4:
+            if(front == -1){
+                printf("Queue is Empty\n");
+            }
+            else{
+                display();
+            }
+                break;
+            case 5:
+                exit(0);
+                break;
+            default:
+                printf("Invalid Choice\n");
+        }
+    }   
+    return 0;
+}
