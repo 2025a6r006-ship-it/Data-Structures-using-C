@@ -1,0 +1,32 @@
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+
+int main() {
+    int n;
+    scanf("%d",&n);
+    int sandwiches[1000];
+    int students[1000];
+    for(int i=0;i<n;i++){
+        scanf("%d",&students[i]);
+    }
+    for(int i=0;i<n;i++){
+        scanf("%d",&sandwiches[i]);
+    }
+    int front=0,rear=n-1,top=0,count=0;
+    while(n>0 && count<=n){
+        if(students[front]==sandwiches[top]){
+            front++;
+            top++;
+            n--;
+            count=0;
+        }
+        else{
+            students[++rear]=students[front++];
+            count++;
+        }
+    }
+    printf("%d",n);
+    return 0;
+}
