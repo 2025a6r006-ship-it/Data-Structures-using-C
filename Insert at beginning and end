@@ -1,0 +1,68 @@
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+
+struct Node{
+    int data;
+    struct Node* next;
+    struct Node* prev;
+};
+
+struct Node* head = NULL;
+struct Node* tail = NULL;
+
+struct Node* createNode(int data){
+    struct Node* temp = (struct Node*)malloc(sizeof(struct Node));
+    temp->data = data;
+    temp->next = NULL;
+    temp->prev = NULL;
+    return temp;
+}
+
+void insertelements(int data){
+    struct Node* newNode = createNode(data);
+    if(head==NULL && tail==NULL){
+        head = tail = newNode;
+    }
+    else{
+        tail->next = newNode;
+        newNode->prev = tail;
+        tail = newNode;
+    }
+}
+
+void InsertXinbeg(int data){
+    struct Node* newNode = createNode(data);
+    if(head==NULL && tail==NULL){
+        head = tail = newNode;
+    }
+    else{
+        newNode->next = head;
+        head->prev = newNode;
+        head = newNode;
+    }
+}
+
+void display(){
+    struct Node* temp = head;
+    while(temp!=NULL){
+        printf("%d ",temp->data);
+        temp = temp->next;
+    }
+}
+
+int main() {
+    int N,data;
+    scanf("%d",&N);
+    for(int i=0;i<N;i++){
+        scanf("%d",&data);
+        insertelements(data);
+    }
+    int X,Y;
+    scanf("%d%d",&X,&Y);
+    InsertXinbeg(X);
+    insertelements(Y);
+    display();
+    return 0;
+}
