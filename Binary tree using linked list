@@ -42,6 +42,80 @@ Node* insert(Node* root, int data){
     }
 }
 
+Node* search(Node* root,int val){
+    if(root==NULL){
+        return NULL;
+    }
+    Node* queue[100];
+    int front=-1, rear=-1;
+    queue[++rear] = root;
+    front++;
+    while(front<=rear){
+        Node* temp = queue[front++];
+        if(temp->data==val){
+            return temp;
+        }
+        if(temp->left!=NULL){
+            queue[++rear]=temp->left;
+        }
+        if(temp->right!=NULL){
+            queue[++rear] = temp->right;
+        }
+    }
+    return NULL;
+}
+
+void delete(Node* root,int val){
+    if(root==NULL){
+        return;
+    }
+    Node* queue[100];
+    int front = -1 , rear=-1;
+    queue[++rear]=root;
+    front++;
+    Node* t1=NULL, *t2=NULL, *temp;
+    while(front<=rear){
+        temp = queue[front++];
+        if(temp->data==val){
+            t1=temp;
+        }
+        if(temp->left!=NULL){
+            queue[++rear]=temp->left;
+        }
+        if(temp->right!=NULL){
+            queue[++rear]=temp->right;
+        }
+    }
+    t2=temp;
+    if(t1==NULL){
+        printf("Element Not Found\n");
+    }
+    else{
+        t1->data = t2->data;
+        front = rear = -1;
+        queue[++rear] = root;
+        front++;
+        while(front<=rear){
+            Node* temp = queue[front++];
+            if(temp->left==t2){
+                temp->left=NULL;
+                break;
+            }
+            if(temp->right==t2){
+                temp->right = t2;
+                break;
+            }
+            if(temp->left!=NULL){
+            queue[++rear]=temp->left;
+            }
+            if(temp->right!=NULL){
+            queue[++rear]=temp->right;
+            }
+        }
+        printf("Element Deleted\n");
+    }
+}
+
 void preorder(Node* root){
     if(root == NULL){
         return;
@@ -79,7 +153,8 @@ int main(){
         printf("2.Pre-Order Traversal\n");
         printf("3.In Order Traversal\n");
         printf("4.Post-Order Traversal\n");
-        printf("5.Exit\n");
+        printf("5. Search\n");
+        printf("6. Delete\n");
         printf("Enter Choice: ");
         scanf("%d", &choice);
         switch(choice){
@@ -98,8 +173,24 @@ int main(){
             postorder(root);
                 break;
             case 5:
+               printf("Enter value to search: ");
+               scanf("%d",&value);
+               if(search(root,value)==NULL){
+                printf("Not Found\n");
+               }
+               else{
+                printf("Found\n");
+               }
+               break;
+            case 6:
+               printf("Enter Value to delete: ");
+               scanf("%d",&value);
+               delete(root,value);
+               break;
+            case 7:
                exit(0);
-               default:
+               break;
+            default:
                printf("Invalid Choice!!!\n");
         }
     }
