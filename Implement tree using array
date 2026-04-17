@@ -1,3 +1,4 @@
+//BT Using Array
 //BT Array
 #include<stdio.h>
 #include<stdlib.h>
@@ -19,6 +20,27 @@ void insert(int val){
     }
 }
 
+int search(int val){
+    for(int i=0;i<idx;i++){
+        if(tree[i]==val){
+            return i;
+        }
+    }
+    return -1;
+}
+
+void delete(int val){
+    int index = search(val);
+    if(idx==-1){
+        printf("Element Not Found\n");
+    }
+    else{
+        tree[index] = tree[idx-1];
+        printf("Node Deleted\n");
+    }
+}
+
+
 void levelorder(){
     if(idx==0){
         printf("Tree is Empty\n");
@@ -32,30 +54,30 @@ void levelorder(){
     }
 }
 
-void preOrder(int treeindex){
-    if(index>=max || treeindex!=-1){
+void preOrder(int index){
+    if(index>=max || tree[index]==-1){
         return;
     }
     printf("%d ",tree[index]);
     preOrder(2*index+1);
-    preOrder(2*index+2);
+    preOrder(2*idx+2);
 }
 
-void inOrder(int treeindex){
-    if(index>=max || treeindex!=-1){
+void inOrder(int index){
+    if(index>=max || tree[index]!=-1){
         return;
     }
-    preOrder(2*index+1);
+    inOrder(2*idx+1);
     printf("%d ",tree[index]);
-    preOrder(2*index+2);
+    inOrder(2*idx+2);
 }
 
-void postOrder(int treeindex){
-    if(index>=max || treeindex!=-1){
+void postOrder(int index){
+    if(index>=max || tree[index]!=-1){
         return;
     }
-    preOrder(2*index+1);
-    preOrder(2*index+2);
+    postOrder(2*idx+1);
+    postOrder(2*idx+2);
     printf("%d ",tree[index]);
 }
 
@@ -69,7 +91,8 @@ int main(){
         printf("3. Pre-Order Traversal\n");
         printf("4. In-Order Traversal\n");
         printf("5. Post-Order Traversal\n");
-        printf("6. Exit\n");
+        printf("6. Search\n");
+        printf("7. Delete Node\n");
         printf("Enter Choice: ");
         scanf("%d",&choice);
         switch(choice){
@@ -91,6 +114,21 @@ int main(){
                 postOrder(0);
                 break;
             case 6:
+                printf("Enter Value To Search: ");
+                scanf("%d",&value);
+                if(search(value)==-1){
+                    printf("Not Found\n");
+                }
+                else{
+                    printf("Found\n");
+                }
+                break;
+            case 7:
+                printf("Enter value to delete: ");
+                scanf("%d",&value);
+                delete(value);
+                break;
+            case 8:
                 exit(0);
                 break;
             default:
