@@ -1,0 +1,109 @@
+#include <assert.h>
+#include <limits.h>
+#include <stdbool.h>
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+struct Node{
+    int data;
+    struct Node* next;
+};
+
+struct Node* head = NULL;
+
+struct Node* createnode(int data){
+    struct Node* temp = (struct Node*) malloc(sizeof(struct Node));
+    temp->data = data;
+    temp->next = NULL;
+    return temp;
+}
+
+void InsertAtEnd(int data){
+    struct Node* newnode = createnode(data);
+    if(head==NULL){
+        head = newnode;
+    }
+    else{
+        struct Node* temp = head;
+        while(temp->next!=NULL){
+            temp = temp->next;
+        }
+        temp->next = newnode;
+    }
+}
+
+void deletefromend(){
+    if(head==NULL){
+        return;
+    }
+    if(head->next==NULL){
+        head = NULL;
+        return;
+    }
+    else{
+        struct Node* temp = head;
+        while(temp->next->next!=NULL){
+            temp = temp->next;
+        }
+        temp->next = NULL;
+    }
+}
+
+void reverselinkedlist(int n){
+    int stack[n],top=-1;
+    struct Node* temp = head;
+    while(temp!=NULL){
+        stack[++top] = temp->data;
+        temp = temp->next;
+    }
+    temp = head;
+    while(temp!=NULL){
+        temp->data = stack[top--];
+        temp = temp->next;
+    }
+}
+
+bool ispalindrome(int n){
+    int stack[n],top=-1;
+    struct Node* temp = head;
+    while(temp!=NULL){
+        stack[++top] = temp->data;
+        temp = temp->next;
+    }
+    temp = head;
+    while(temp!=NULL){
+        if(temp->data!=stack[top--]){
+            return false;
+        }
+        temp = temp->next;
+    }
+    return true;
+}
+
+void show(){
+    struct Node* temp = head;
+    while(temp!=NULL){
+        printf("%d ",temp->data);
+        temp = temp->next;
+    }
+}
+
+int main() {
+    int n,val;
+    scanf("%d",&n);
+    for(int i=0;i<n;i++){
+        scanf("%d",&val);
+        InsertAtEnd(val);
+    }
+    if(ispalindrome(n)){
+        printf("Palindrome : ");
+        show();
+    }
+    else{
+        printf("Not Palindrome : ");
+        reverselinkedlist(n);
+        show();
+    }
+    return 0;
+}
