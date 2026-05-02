@@ -1,0 +1,61 @@
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+
+typedef struct Node{
+    int data;
+    struct Node* left;
+    struct Node* right;
+} Node;
+
+Node* createnode(int data){
+    Node* temp = (Node*)malloc(sizeof(Node));
+    temp->data = data;
+    temp->right = NULL;
+    temp->left = NULL;
+    return temp;
+}
+
+Node* insert(Node* root, int data){
+    if(root==NULL){
+        return createnode(data);
+    }
+    else if(data<root->data){
+        root->left = insert(root->left,data);
+    }
+    else{
+        root->right = insert(root->right,data);
+    }
+    return root;
+}
+
+Node* search(Node* root, int data){
+    if(root==NULL)
+        return NULL;
+    else if(root->data==data)
+        return root;
+    else if(data<root->data)
+        return search(root->left,data);
+    else
+        return search(root->right,data);
+}
+
+int main() {
+    int N,data;
+    scanf("%d",&N);
+    Node* root = NULL;
+    for(int i=0;i<N;i++){
+        scanf("%d",&data);
+        root = insert(root,data);
+    }
+    int K;
+    scanf("%d",&K);
+    if(search(root,K)==NULL){
+        printf("%d not found in BST\n",K);
+    }
+    else{
+        printf("%d found in BST\n",K);
+    }
+    return 0;
+}
