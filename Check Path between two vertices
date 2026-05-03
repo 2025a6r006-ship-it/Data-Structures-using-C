@@ -1,0 +1,63 @@
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+#define max 10
+int graph[max][max];
+int n;
+
+void insert(int u, int v){
+    graph[u][v]=1;
+    graph[v][u]=1;
+}
+
+int dfs(int start,int dest){
+    int stack[max],top=-1;
+    int visited[n];
+    
+    for(int i=0;i<n;i++){
+        visited[i]=0;
+    }
+    stack[++top] = start;
+    while(top!=-1){
+        int v = stack[top--];
+        if(v==dest){
+            return 1;
+        }
+        if(visited[v]==0){
+            visited[v]=1;
+            for(int i=n-1;i>=0;i--){
+                if(graph[v][i]==1 && visited[i]==0){
+                    stack[++top]=i;
+                }
+            }
+        }
+    }
+    return 0;
+}
+
+int main() {
+    scanf("%d",&n);
+    int e,u,v;
+    for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++){
+            graph[i][j]=0;
+        }
+    }
+    
+    scanf("%d",&e);
+    for(int i=0;i<e;i++){
+        scanf("%d%d",&u,&v);
+        insert(u,v);
+    }
+    
+    int s,d;
+    scanf("%d%d",&s,&d);
+    if(dfs(s,d)){
+        printf("Path Exists\n");
+    }
+    else{
+        printf("No Path\n");
+    }
+    return 0;
+}
